@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <header class="jumbotron text-center">
+        <h1 class="display-4">Registro de Usuarios</h1>
+        <p class="lead">Aquí puedes registrar a los usuarios</p>
+    </header>
+    <section id="contact" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.username.label_tag }} {{ form.username }}
+                        <br>
+                        {{ form.password.label_tag }} {{ form.password }}
+                        <hr>
+                        {{ form.email.label_tag }} {{ form.email }}
+                        <hr>
+                        {{ form.grupo.label_tag }} {{ form.grupo }}
+                        <hr>
+                        <button type="submit">Registrarse</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% endblock %}
