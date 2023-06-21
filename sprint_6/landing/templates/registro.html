@@ -8,23 +8,19 @@
     </header>
     <section id="contact" class="py-5">
         <div class="container">
-            <h2 class="text-center">Contacto</h2>
             <div class="row">
                 <div class="col-md-6 mx-auto">
-                    <form action="#" method="post">
-                        <div class="form-group">
-                            <label for="name">Nombre</label>
-                            <input type="text" name="name" id="name" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" id="email" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Mensaje</label>
-                            <textarea name="message" id="message" rows="5" class="form-control"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Enviar mensaje</button>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.username.label_tag }} {{ form.username }}
+                        <br>
+                        {{ form.password.label_tag }} {{ form.password }}
+                        <hr>
+                        {{ form.email.label_tag }} {{ form.email }}
+                        <hr>
+                        {{ form.grupo.label_tag }} {{ form.grupo }}
+                        <hr>
+                        <button type="submit">Registrarse</button>
                     </form>
                 </div>
             </div>
