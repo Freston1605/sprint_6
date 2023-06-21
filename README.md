@@ -3,7 +3,7 @@
 Proyecto de Sprint del módulo 6 del grupo 2
 
 ## Integrantes:
-- Mauricio Fuentes
+- Marcelo Fuentes
 - Miguel Ángel Garay
 - Franco Valdés
 - Viviana Vera
