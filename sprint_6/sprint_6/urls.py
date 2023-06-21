@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from landing.views import landing_page
+from landing.views import registro_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', landing_page, name='landing_page'),
-    path('registro/', landing_page, name='registro_page')
+    path('registro/', registro_page, name='registro_page')
 ]
