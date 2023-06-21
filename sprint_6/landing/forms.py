@@ -1,19 +1,16 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
+from .models import User
 
-class ModificarCampos(UserCreationForm):
-    username = forms.CharField(label='Usuario')
-    email = forms.EmailField(label='Correo')
-    password = forms.CharField(label='Clave', widget=forms.PasswordInput)
-    
-    GRUPOS_CHOICES = [
-        ('grupo1', 'Usuarios'),
-        ('grupo2', 'Administradores'),
-        ('grupo3', 'Vendedores'),
-    ]
-    grupo = forms.ChoiceField(label='Grupo', choices=GRUPOS_CHOICES)
+class UserRegistrationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'grupo']
+        fields = ('email', 'password', 'first_name', 'last_name')
+
+class EmailAuthenticationForm(AuthenticationForm):
+    username = forms.EmailField(
+        max_length=254,
+        widget=forms.EmailInput(attrs={'autofocus': True})
+    )

@@ -1,19 +1,43 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
-from django.shortcuts import render, redirect
-from landing.forms import ModificarCampos
+rom django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+# from django.contrib.auth.forms import AuthenticationForm
+from .forms import UserRegistrationForm, EmailAuthenticationForm
+
 
 def landing_page(request):
     return render(request, 'landing.html')
 
-def registro_page(request):
+def register_user(request):
     if request.method == 'POST':
-        form = ModificarCampos(request.POST)
+        form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('landing_page')  # Redireccionar a la página de inicio después del registro exitoso
+            form.save() # Guarda al usuario en la base de datos
+            # Realiza las acciones adicionales que desees, 
+            # como iniciar sesión automáticamente, 
+            # redirigir a una página de inicio, etc.
+            return redirect('landing_page') #Redirigiendo al inicio
     else:
-        form = ModificarCampos()
-    
-    return render(request, 'registro.html', {'form': form})
+        form = UserRegistrationForm()
+    return render(request, 'register.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        form = EmailAuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
+                login(request, user)
+                # Redirigir a la página después del inicio de sesión exitoso
+                return redirect('home')
+    else:
+        form = EmailAuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')  # Redirige a la página principal después del cierre de sesión
+
+def home(request):
+    return render(request, 'home.html')

@@ -16,11 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from landing.views import landing_page
-from landing.views import registro_page
+<<<<<< user_forms
+from landing.views import landing_page, register_user, login_view, logout_view, home
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', landing_page, name='landing_page'),
-    path('registro/', registro_page, name='registro_page')
+    path('register/', register_user, name='register_user'),
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
+    path('home/', home, name='home' ) # Agregar página de inicio (no la landing_page)
+
 ]
