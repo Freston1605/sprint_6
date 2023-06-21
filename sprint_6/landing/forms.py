@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class ModificarCampos(UserCreationForm):
     username = forms.CharField(label='Usuario')
     email = forms.EmailField(label='Correo')
-    password = forms.PasswordInput
+    password = forms.CharField(label='Clave', widget=forms.PasswordInput)
     
     GRUPOS_CHOICES = [
         ('grupo1', 'Usuarios'),
