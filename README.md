@@ -1,4 +1,5 @@
-# sprint_6
+# SPRINT 6
+
 Proyecto de Sprint del módulo 6 del grupo 2
 
 ## Integrantes:
