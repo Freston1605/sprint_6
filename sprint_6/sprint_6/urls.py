@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-<<<<<< user_forms
+
 from landing.views import landing_page, register_user, login_view, logout_view, home
 
 
