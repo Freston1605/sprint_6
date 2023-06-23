@@ -15,8 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-
+from django.urls import path, include
 from landing.views import landing_page, register_user, login_view, logout_view
 from gestion_usuarios.views import home
 from gestion_usuarios import urls
@@ -27,6 +26,6 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('home/', home, name='home' ),
-    path('accounts/', include('gestion_usuarios.urls')) # Agregar página de inicio (no la landing_page)
+    path('accounts/', include('gestion_usuarios.urls')), # Agregar página de inicio (no la landing_page)
 
 ]
