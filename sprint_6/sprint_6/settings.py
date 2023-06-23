@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'gestion_usuarios',
+    'landing',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'plantilla.urls'
+ROOT_URLCONF = 'sprint_6.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'plantilla.wsgi.application'
+WSGI_APPLICATION = 'sprint_6.wsgi.application'
 
 
 # Database
@@ -125,4 +125,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home/'
 
-AUTH_USER_MODEL = "gestion_usuarios.User" 
+AUTH_USER_MODEL = "landing.User" 
