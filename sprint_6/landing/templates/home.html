@@ -3,7 +3,7 @@
 {% block content %}
 <div class="jumbotron d-flex align-items-center justify-content-center">
     <div class="text-center">
-        <h1 class="display-4">¡Bienvenido!</h1>
+        <h1 class="display-4">¡Bienvenido {{user.get_username}}!</h1>
         <p class="lead">Esta es una pantalla de inicio con Bootstrap.</p>
         <hr class="my-4">
         <p>Aquí puedes agregar más información sobre tu sitio o tu proyecto.</p>
@@ -27,3 +27,4 @@
         </div>
     </div>
 {% endblock %}
+

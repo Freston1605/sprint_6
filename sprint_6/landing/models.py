@@ -20,18 +20,17 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """ Clase para los usuarios comunes de la página. Hereda de AbstractBaseUser y PermissionsMixin."""
+    username = models.CharField(max_length=30)
     email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
+    grupo = models.CharField(max_length=30)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    groups = models.ManyToManyField(Group, blank=True, related_name='customuser_set', related_query_name='customuser')
     user_permissions = models.ManyToManyField(Permission, blank=True, related_name='customuser_set', related_query_name='customuser')
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         return self.email

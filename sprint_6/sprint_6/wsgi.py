@@ -1,5 +1,5 @@
 """
-WSGI config for sprint_6 project.
+WSGI config for plantilla project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

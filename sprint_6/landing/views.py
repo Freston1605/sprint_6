@@ -1,43 +1,61 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-# from django.contrib.auth.forms import AuthenticationForm
-from .forms import UserRegistrationForm, EmailAuthenticationForm
+from django.contrib import messages
+from django.shortcuts import render, redirect, HttpResponse
+from django.contrib.auth.models import User, auth
+from .models import User
 
+def salir(request):
+    auth.logout(request)
+    return redirect('home')
 
-def landing_page(request):
-    return render(request, 'landing.html')
-
-def register_user(request):
+def inicio_sesion(request):
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save() # Guarda al usuario en la base de datos
-            # Realiza las acciones adicionales que desees, 
-            # como iniciar sesión automáticamente, 
-            # redirigir a una página de inicio, etc.
-            return redirect('landing_page') #Redirigiendo al inicio
-    else:
-        form = UserRegistrationForm()
-    return render(request, 'register.html', {'form': form})
+        username = request.POST['username']
+        password = request.POST['password']
+        user = auth.authenticate(username=username, password=password)
 
-def login_view(request):
+        if user is not None:
+            auth.login(request, user)
+            if user.grupo == "Administradores":
+                return redirect('/admin')
+            else:
+               return redirect('vista_usuarios')
+        else:
+            messages.info(request, 'Usuario y/o Clave Invalida')
+            return redirect('inicio_sesion')
+
+    else:
+        return render(request, 'login.html')
+
+def registrar_usuario(request):
     if request.method == 'POST':
-        form = EmailAuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            email = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(request, email=email, password=password)
-            if user is not None:
-                login(request, user)
-                # Redirigir a la página después del inicio de sesión exitoso
-                return redirect('home')
-    else:
-        form = EmailAuthenticationForm()
-    return render(request, 'login.html', {'form': form})
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+        grupo = request.POST['grupo']
 
-def logout_view(request):
-    logout(request)
-    return redirect('home')  # Redirige a la página principal después del cierre de sesión
+        if password == confirm_password:
+            if User.objects.filter(username=username).exists():
+                messages.info(request, 'Usuario ya registrado.')
+                return redirect('registrar_usuario')
+            elif User.objects.filter(email=email).exists():
+                messages.info(request, 'Email ya está registrado.')
+                return redirect('registrar_usuario')
+            else:
+                user = User.objects.create_user(username=username, email=email, password=password)
+                user.grupo = grupo
+                user.save()
+                return redirect('inicio_sesion')
+
+        else:
+            messages.info(request, 'Las contraseñas no coinciden.')
+            return redirect('registrar_usuario')
+
+    else:
+        return render(request, 'registro.html')
 
 def home(request):
     return render(request, 'home.html')
+
+def vista_usuarios(request):
+    return render(request, 'usuario.html')

@@ -1,5 +1,5 @@
 """
-URL configuration for sprint_6 project.
+URL configuration for plantilla project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -16,16 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from landing.views import landing_page, register_user, login_view, logout_view
-from gestion_usuarios.views import home
-from gestion_usuarios import urls
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', landing_page, name='landing_page'),
-    path('register/', register_user, name='register_user'),
-    path('login/', login_view, name='login'),
-    path('logout/', logout_view, name='logout'),
-    path('home/', home, name='home' ),
-    path('accounts/', include('gestion_usuarios.urls')), # Agregar página de inicio (no la landing_page)
+from landing import views
 
+urlpatterns = [
+    path('admin/', admin.site.urls, name="admin"),
+    path('', views.home, name="home"),
+    path('accounts/', include('landing.urls'))
 ]
